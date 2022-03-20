@@ -33,3 +33,23 @@ class Solution:
                 stack[-1] += max(2*s, 1)
         return stack.pop()
                 
+class Solution2 {
+
+    public int scoreOfParentheses(String S) {
+        int ans = 0, bal = 0;
+        for (int i = 0; i < S.length(); ++i) {
+            if (S.charAt(i) == '(') {
+                bal++;
+            } else {
+                bal--;
+                # only count '()' as points
+                # (()), the bracket at index 0 and 3, they are not points
+                # but the balance (how many time times 2
+                if (S.charAt(i-1) == '(')
+                    ans += 1 << bal;
+            }
+        }
+
+        return ans;
+    }
+}
