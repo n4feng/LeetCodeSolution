@@ -1,0 +1,12 @@
+class Solution:
+    def brokenCalc(self, startValue: int, target: int) -> int:
+        #instead of multiplying and min, change to plus and divide
+        #because /2 +1 is always faster than +1 +1 /2 and they are equivalent
+        #so we can greedily divide when target is even, and +1 when it is odd each round
+        ans = 0
+        while target > startValue:
+            ans += 1
+            if target % 2: target += 1
+            else: target //= 2
+
+        return ans + startValue - target
