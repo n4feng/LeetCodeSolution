@@ -1,0 +1,24 @@
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        res = []
+        for i in range(n):
+            res.append([0]*n)
+        cnt = 1;
+        for layer in range((n + 1) // 2):
+            # direction 1 - traverse from left to right
+            for ptr in range(layer, n - layer):
+                res[layer][ptr] = cnt
+                cnt+=1
+            # direction 2 - traverse from top to bottom
+            for ptr in range(layer + 1, n - layer):
+                res[ptr][n - layer - 1] = cnt
+                cnt+=1
+            # direction 3 - traverse from right to left
+            for ptr in range(layer + 1, n - layer):
+                res[n - layer - 1][n - ptr - 1] = cnt
+                cnt+=1
+            # direction 4 - traverse from bottom to top
+            for ptr in range(layer + 1, n - layer - 1):
+                res[n - ptr - 1][layer] = cnt
+                cnt+=1
+        return res
