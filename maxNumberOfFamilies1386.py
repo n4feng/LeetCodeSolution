@@ -10,7 +10,7 @@ class Solution:
                 else:
                     seat[r[0]-1] = {r[1]-1:0}
         #use minus because timelimit test case is mo
-        res = 2*n
+        res = 2*(n-len(seat))
         for row in seat:
             flag = 0
             flag = flag + (1 in seat[row] or 2 in seat[row])
@@ -18,7 +18,5 @@ class Solution:
             flag = flag + ((5 in seat[row] or 6 in seat[row])<<2)
             flag = flag + ((7 in seat[row] or 8 in seat[row])<<3)
             if (flag >=0 and flag < 5) or flag == 8 or flag == 9 or flag == 12:
-                res-=1
-            else:
-                res-=2
+                res+=1
         return res
