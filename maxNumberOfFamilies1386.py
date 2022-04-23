@@ -6,9 +6,10 @@ class Solution:
         for r in reservedSeats:
             if r[1]>1 and r[1]<10:
                 if r[0]-1 in seat:
-                    seat[r[0]-1][r[1]-1] = 0
+                    seat[r[0]-1].add(r[1]-1)
                 else:
-                    seat[r[0]-1] = {r[1]-1:0}
+                    seat[r[0]-1] = set()
+                    seat[r[0]-1].add(r[1]-1)
         #use minus because timelimit test case is mo
         res = 2*(n-len(seat))
         for row in seat:
