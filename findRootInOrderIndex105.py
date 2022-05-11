@@ -6,31 +6,22 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        def findRootInOrderIndex(rootVal):
-            rootIndexInOrder = 0
-            for i in inorder:
-                if i == rootVal:
-                    break
-                rootIndexInOrder+=1
-            return rootIndexInOrder
-        def array_to_tree(rootPreorder, rootInorder, leftInorder, rightInorder):
-            root = TreeNode(preorder[rootPreorder])
-            if leftInorder == rootInorder:
-                root.left = None
-            elif leftInorder == rootInorder-1:
-                root.left = TreeNode(inorder[leftInorder])
-            else:                
-                root.left = array_to_tree(rootPreorder+1, findRootInOrderIndex(preorder[rootPreorder+1]), leftInorder, rootInorder-1)
-            
+        return self.arrayToTree(0, self.findValIndex(preorder[0], inorder), 0, len(inorder)-1, preorder, inorder)
+        
+    def arrayToTree(self, rootPreIndex, rootInIndex, leftInIndex, rightInIndex, preorder, inorder):
+        root = TreeNode(preorder[rootPreIndex])
+        leftSubSize = 0
+        if rootInIndex > leftInIndex:
+            leftSubSize = rootInIndex - leftInIndex
+            root.left = self.arrayToTree(rootPreIndex+1, self.findValIndex(preorder[rootPreIndex+1], inorder), leftInIndex, rootInIndex-1, preorder, inorder)
+        if rootInIndex < rightInIndex:
+            root.right = self.arrayToTree(rootPreIndex+leftSubSize+1, self.findValIndex(preorder[rootPreIndex+leftSubSize+1], inorder), rootInIndex+1, rightInIndex, preorder, inorder)
+        return root
+        
+    def findValIndex(self, val, order):
+        for i in range(len(order)):
+            if val == order[i]:
+                return i
+        return -1
                 
-            if rightInorder == rootInorder:
-                root.right = None
-            elif rightInorder == rootInorder+1:
-                root.right = TreeNode(inorder[rightInorder])
-            else:
-                rightRootPreorderIndex = rootPreorder+rootInorder-leftInorder+1
-                root.right = array_to_tree(rightRootPreorderIndex, findRootInOrderIndex(preorder[rightRootPreorderIndex]), rootInorder+1, rightInorder)
-            return root
-            
-
-        return array_to_tree(0, findRootInOrderIndex(preorder[0]), 0, len(inorder)-1)
+        
