@@ -6,6 +6,35 @@
  *     TreeLinkNode(int x) { val = x; }
  * }
  */
+
+class Solution1 {
+    //use queue to solve problem
+    public Node connect(Node root) {
+        if (root == null) return null;
+        List<Node> levelQueue = new ArrayList<>();
+        levelQueue.add(root);
+        int levelTotal = 1;
+        while(!levelQueue.isEmpty()){
+            int nextLevelTotal = 0;
+            for(int i = 0; i < levelTotal; i++){
+                Node ptr = levelQueue.remove(0);
+                if(i < levelTotal-1){
+                    ptr.next = levelQueue.get(0);
+                }
+                if(ptr.left != null){
+                    levelQueue.add(ptr.left);
+                    nextLevelTotal++;
+                }
+                if(ptr.right != null){
+                    levelQueue.add(ptr.right);
+                    nextLevelTotal++;
+                }
+            }
+            levelTotal = nextLevelTotal;
+        }
+        return root;
+    }
+}
 public class Solution {
     public void connect(TreeLinkNode root) {
         if(root == null) return;
