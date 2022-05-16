@@ -1,4 +1,4 @@
-class Solution {
+class Permutations46 {
     public List<List<Integer>> permute(int[] nums) {
         if(nums.length == 0)
             return null;
