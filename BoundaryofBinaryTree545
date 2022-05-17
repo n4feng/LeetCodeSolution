@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class BoundaryofBinaryTree545 {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> bound = new ArrayList<>();
+        bound.add(root.val);
+        if(root.left != null)
+            dfsLeft(bound, root.left);
+        if(!(root.left == null && root.right == null))
+            dfsBottom(bound, root);
+        if(root.right != null)
+            dfsRight(bound, root.right);
+        
+        return bound;
+    }
+    
+    public void dfsLeft(List<Integer> bound, TreeNode root){
+        if(!(root.left == null && root.right == null))
+            bound.add(root.val);
+        if(root.left != null)
+            dfsLeft(bound, root.left);
+        else{
+            if(root.right != null)
+                dfsLeft(bound, root.right);
+        }
+    }
+    
+    public void dfsBottom(List<Integer> bound, TreeNode root){
+        if(root.left == null && root.right == null)
+            bound.add(root.val);
+        if(root.left != null){
+            dfsBottom(bound, root.left);
+        }
+        if(root.right != null){
+            dfsBottom(bound, root.right);
+        }
+    }
+    
+    public void dfsRight(List<Integer> bound, TreeNode root){
+        if(root.right != null)
+            dfsRight(bound, root.right);
+        else{
+            if(root.left != null)
+                dfsRight(bound, root.left);
+        }
+        if(!(root.left == null && root.right == null))
+            bound.add(root.val);
+    }
+}
