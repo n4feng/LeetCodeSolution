@@ -1,4 +1,27 @@
-class Solution {
+class SubsetsII90 {
+    //backtrace method
+    List<List<Integer>> res;
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<Integer> path = new ArrayList<>();
+        res = new ArrayList<>();
+        backtrace(path, 0, nums);
+        return res;
+    }
+    private void backtrace(List<Integer> path, int start, int[] nums){
+        res.add(new ArrayList(path));
+        for(int i = start; i < nums.length; i++){
+            path.add(nums[i]);
+            backtrace(path, i+1, nums);
+            path.remove(path.size()-1);
+            //skip all elements that is equal to current one
+            while(i+1 < nums.length && nums[i+1] == nums[i])
+                i++;
+        }
+    }
+}
+
+class SubsetIIDFS {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
         if(nums.length == 0){
